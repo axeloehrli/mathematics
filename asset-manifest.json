@@ -1,15 +1,16 @@
 {
-  "main.css": "/mathematics/static/css/main.207eb754.chunk.css",
-  "main.js": "/mathematics/static/js/main.2e700877.chunk.js",
-  "main.js.map": "/mathematics/static/js/main.2e700877.chunk.js.map",
-  "static/js/1.fbbdfdca.chunk.js": "/mathematics/static/js/1.fbbdfdca.chunk.js",
-  "static/js/1.fbbdfdca.chunk.js.map": "/mathematics/static/js/1.fbbdfdca.chunk.js.map",
+  "main.css": "/mathematics/static/css/main.2682e36b.chunk.css",
+  "main.js": "/mathematics/static/js/main.16f56b15.chunk.js",
+  "main.js.map": "/mathematics/static/js/main.16f56b15.chunk.js.map",
+  "static/js/1.2a044bbb.chunk.js": "/mathematics/static/js/1.2a044bbb.chunk.js",
+  "static/js/1.2a044bbb.chunk.js.map": "/mathematics/static/js/1.2a044bbb.chunk.js.map",
   "runtime~main.js": "/mathematics/static/js/runtime~main.1526d21a.js",
   "runtime~main.js.map": "/mathematics/static/js/runtime~main.1526d21a.js.map",
+  "static/media/menu.svg": "/mathematics/static/media/menu.ef1b87a8.svg",
   "static/media/open.svg": "/mathematics/static/media/open.053a7170.svg",
   "static/media/close.svg": "/mathematics/static/media/close.f2d5641e.svg",
-  "static/css/main.207eb754.chunk.css.map": "/mathematics/static/css/main.207eb754.chunk.css.map",
+  "static/css/main.2682e36b.chunk.css.map": "/mathematics/static/css/main.2682e36b.chunk.css.map",
   "index.html": "/mathematics/index.html",
-  "precache-manifest.c70cd825853724eff84e3a1ada3332f1.js": "/mathematics/precache-manifest.c70cd825853724eff84e3a1ada3332f1.js",
+  "precache-manifest.ebb24130223a5bf3317866ac3be11c16.js": "/mathematics/precache-manifest.ebb24130223a5bf3317866ac3be11c16.js",
   "service-worker.js": "/mathematics/service-worker.js"
 }
