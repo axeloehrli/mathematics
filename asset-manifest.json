@@ -1,16 +1,18 @@
 {
-  "main.css": "/mathematics/static/css/main.2682e36b.chunk.css",
-  "main.js": "/mathematics/static/js/main.16f56b15.chunk.js",
-  "main.js.map": "/mathematics/static/js/main.16f56b15.chunk.js.map",
-  "static/js/1.2a044bbb.chunk.js": "/mathematics/static/js/1.2a044bbb.chunk.js",
-  "static/js/1.2a044bbb.chunk.js.map": "/mathematics/static/js/1.2a044bbb.chunk.js.map",
-  "runtime~main.js": "/mathematics/static/js/runtime~main.1526d21a.js",
-  "runtime~main.js.map": "/mathematics/static/js/runtime~main.1526d21a.js.map",
-  "static/media/menu.svg": "/mathematics/static/media/menu.ef1b87a8.svg",
-  "static/media/open.svg": "/mathematics/static/media/open.053a7170.svg",
-  "static/media/close.svg": "/mathematics/static/media/close.f2d5641e.svg",
-  "static/css/main.2682e36b.chunk.css.map": "/mathematics/static/css/main.2682e36b.chunk.css.map",
-  "index.html": "/mathematics/index.html",
-  "precache-manifest.ebb24130223a5bf3317866ac3be11c16.js": "/mathematics/precache-manifest.ebb24130223a5bf3317866ac3be11c16.js",
-  "service-worker.js": "/mathematics/service-worker.js"
+  "files": {
+    "main.css": "/mathematics/static/css/main.49646682.css",
+    "main.js": "/mathematics/static/js/main.1638734a.js",
+    "index.html": "/mathematics/index.html",
+    "static/media/keyboardReturnIcon.svg": "/mathematics/static/media/keyboardReturnIcon.37017d34a8d5bb0e3bbce24d639ea480.svg",
+    "static/media/close.svg": "/mathematics/static/media/close.3e80d6366dce91734f840e0cf09e7814.svg",
+    "static/media/open.svg": "/mathematics/static/media/open.1adc01de05189343838be43dd1b76d4c.svg",
+    "static/media/menu.svg": "/mathematics/static/media/menu.2512f07f68b41bea98fe73d8516c78d6.svg",
+    "static/media/triangle.svg": "/mathematics/static/media/triangle.21665003b0ac4a5ce77d69d828b07675.svg",
+    "main.49646682.css.map": "/mathematics/static/css/main.49646682.css.map",
+    "main.1638734a.js.map": "/mathematics/static/js/main.1638734a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.49646682.css",
+    "static/js/main.1638734a.js"
+  ]
 }
