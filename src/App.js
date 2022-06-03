@@ -1,9 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import MathKeyboard from "./components/MathKeyboard";
 import Step from "./components/Step";
-
+import VertexToStandard from "./pages/VertexToStandard";
 
 function App() {
   const [vertexFunction, setVertexFunction] = useState()
+  const [standardFunction, setStandardFunction] = useState()
 
   const [steps, setSteps] = useState([])
 
@@ -22,7 +27,9 @@ function App() {
    const [k, setK] = "k"
    const [x, setX] = "x" */
 
-  const handleChange = (e) => {
+  const [invalidInput, setInvalidInput] = useState(true)
+
+  /* const handleChange = (e) => {
     const { id, value } = e.target
 
     if (Number.isInteger(parseInt(value)) === false) {
@@ -37,9 +44,12 @@ function App() {
   }
 
   const convertToStandard = () => {
-    const step1 = { title: "Develop binomial", subSteps: simplifyBinomials() }
-    const step2 = { title: "Replace result in formula", value: step1.subSteps[2].value }
-    setSteps(prevSteps => [...prevSteps, step1, step2])
+    const binomialInfo = simplifyBinomials()
+    const step1 = { title: "Develop binomial", subSteps: binomialInfo.subSteps }
+    const step2 = { title: "Replace result in formula", value: <p className="step-value">f(x)={vertexFunction.a}(x<sup>2</sup>+{binomialInfo.firstTerm}x+{binomialInfo.secondTerm}){vertexFunction.k > 0 ? "+" : ""}{vertexFunction.k}</p> }
+    const step3 = { title: "Apply distributive property", value: <p className="step-value">f(x)={vertexFunction.a}x<sup>2</sup>+{vertexFunction.a * binomialInfo.firstTerm}x+{vertexFunction.a * binomialInfo.secondTerm}{vertexFunction.k > 0 ? "+" : ""}{vertexFunction.k}</p> }
+    const step4 = { title: "Combine similar numbers", value: <p className="step-value">f(x)={vertexFunction.a}x<sup>2</sup>+{vertexFunction.a * binomialInfo.firstTerm}x{parseInt(vertexFunction.a * binomialInfo.secondTerm) + parseInt(vertexFunction.k) > 0 ? "+" : ""}{parseInt(vertexFunction.a * binomialInfo.secondTerm) + parseInt(vertexFunction.k)}</p> }
+    setSteps(prevSteps => [...prevSteps, step1, step2, step3, step4])
   }
 
   const simplifyBinomials = () => {
@@ -61,7 +71,7 @@ function App() {
       title: "Combine similar numbers",
       value: `x^2${h > 0 ? "+" : ""}${h + h}x+${h * h}`
     }
-    return [step1, step2, step3]
+    return { firstTerm: h + h, secondTerm: h * h, subSteps: [step1, step2, step3] }
   }
 
   const onConvertClick = () => {
@@ -83,28 +93,41 @@ function App() {
   useEffect(() => {
     console.log(steps);
   }, [steps])
-
+ */
   return (
-    <div className="App">
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<VertexToStandard />} />
+        <Route path="/mathematics" element={<VertexToStandard />} />
+      </Routes>
+    </BrowserRouter>
+   /*  <div className="App">
+      <Header />
       <p className="formula">
-        f({formulaValues.x})={formulaValues.a}({formulaValues.x}{formulaValues.h > 0 ? "+" : ""}{formulaValues.h})^2{formulaValues.k > 0 ? "+" : formulaValues.k === "k" ? "-" : ""}{formulaValues.k}
+        Vertex form: f({formulaValues.x})={formulaValues.a}({formulaValues.x}{formulaValues.h > 0 ? "+" : ""}{formulaValues.h})<sup>2</sup>{formulaValues.k > 0 ? "+" : formulaValues.k === "k" ? "-" : ""}{formulaValues.k}
       </p>
       <div className="inputs">
-        <label htmlFor="a">a:</label>
-        <input type="number" id="a" onChange={handleChange} />
-        <label htmlFor="h">h:</label>
-        <input type="number" id="h" onChange={handleChange} />
-        <label htmlFor="k">k:</label>
-        <input type="number" id="k" onChange={handleChange} />
+        <div className="input-container">
+          <label htmlFor="a">a</label>
+          <input type="" id="a" onChange={handleChange} />
+        </div>
+        <div className="input-container">
+          <label htmlFor="h">h</label>
+          <input type="number" id="h" onChange={handleChange} />
+        </div>
+        <div className="input-container">
+          <label htmlFor="k">k</label>
+          <input type="tel" id="k" onChange={handleChange} />
+        </div>
       </div>
-      <button onClick={onConvertClick}>Convert</button>
+      <button>Convert</button>
 
       {steps.length > 0 &&
         <div className="steps">
-          {steps.map(step => <Step step={step} />)}
+          {steps.map(step => <Step key={step.title} step={step} />)}
         </div>
       }
-    </div>
+    </div> */
   );
 }
 

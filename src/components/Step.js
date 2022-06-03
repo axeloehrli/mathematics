@@ -12,14 +12,14 @@ export default function Step(props) {
         <p className="step-title">{step.title}</p>
         <img src={show ? CloseIcon : OpenIcon} alt="icon" />
       </div>
-      {show && (step.value && <p className="step-value">{step.value}</p>)}
+      {show && (step.value && step.value)}
       {show && step.subSteps &&
         <div className="sub-steps">
           {step.subSteps.map(
             subStep =>
-              <div className="sub-step">
+              <div key={subStep.title} className="sub-step">
                 <p>{subStep.title}</p>
-                <p>{subStep.value}</p>
+                {subStep.value}
               </div>
           )}
         </div>
