@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/mathematics/static/css/main.e6c7e4ac.css",
-    "main.js": "/mathematics/static/js/main.23c39e68.js",
+    "main.js": "/mathematics/static/js/main.27caab08.js",
     "index.html": "/mathematics/index.html",
     "static/media/keyboardReturnIcon.svg": "/mathematics/static/media/keyboardReturnIcon.37017d34a8d5bb0e3bbce24d639ea480.svg",
     "static/media/close.svg": "/mathematics/static/media/close.3e80d6366dce91734f840e0cf09e7814.svg",
@@ -9,10 +9,10 @@
     "static/media/menu.svg": "/mathematics/static/media/menu.2512f07f68b41bea98fe73d8516c78d6.svg",
     "static/media/triangle.svg": "/mathematics/static/media/triangle.21665003b0ac4a5ce77d69d828b07675.svg",
     "main.e6c7e4ac.css.map": "/mathematics/static/css/main.e6c7e4ac.css.map",
-    "main.23c39e68.js.map": "/mathematics/static/js/main.23c39e68.js.map"
+    "main.27caab08.js.map": "/mathematics/static/js/main.27caab08.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c7e4ac.css",
-    "static/js/main.23c39e68.js"
+    "static/js/main.27caab08.js"
   ]
 }
