@@ -1,18 +1,16 @@
 {
   "files": {
-    "main.css": "/mathematics/static/css/main.16887958.css",
-    "main.js": "/mathematics/static/js/main.93f1065a.js",
+    "main.css": "/mathematics/static/css/main.10fcfaff.css",
+    "main.js": "/mathematics/static/js/main.3f3bc284.js",
     "index.html": "/mathematics/index.html",
-    "static/media/keyboardReturnIcon.svg": "/mathematics/static/media/keyboardReturnIcon.37017d34a8d5bb0e3bbce24d639ea480.svg",
     "static/media/close.svg": "/mathematics/static/media/close.3e80d6366dce91734f840e0cf09e7814.svg",
     "static/media/open.svg": "/mathematics/static/media/open.1adc01de05189343838be43dd1b76d4c.svg",
     "static/media/menu.svg": "/mathematics/static/media/menu.2512f07f68b41bea98fe73d8516c78d6.svg",
-    "static/media/triangle.svg": "/mathematics/static/media/triangle.21665003b0ac4a5ce77d69d828b07675.svg",
-    "main.16887958.css.map": "/mathematics/static/css/main.16887958.css.map",
-    "main.93f1065a.js.map": "/mathematics/static/js/main.93f1065a.js.map"
+    "main.10fcfaff.css.map": "/mathematics/static/css/main.10fcfaff.css.map",
+    "main.3f3bc284.js.map": "/mathematics/static/js/main.3f3bc284.js.map"
   },
   "entrypoints": [
-    "static/css/main.16887958.css",
-    "static/js/main.93f1065a.js"
+    "static/css/main.10fcfaff.css",
+    "static/js/main.3f3bc284.js"
   ]
 }
