@@ -7,19 +7,19 @@ export default function Step(props) {
   const [show, setShow] = useState(false)
 
   return (
-    <div className="step" onClick={() => { setShow(prevState => !prevState) }}>
-      <div className="step-main">
+    <div className={props.paddingTop ? "step padding" : "step"} >
+      <div className="step-main" onClick={() => { setShow(prevState => !prevState) }}>
         <p className="step-title">{step.title}</p>
         <img src={show ? CloseIcon : OpenIcon} alt="icon" />
       </div>
-      {show && (step.value && step.value)}
+      {show && (step.value && <p className="step-value">{step.value}</p>)}
       {show && step.subSteps &&
         <div className="sub-steps">
           {step.subSteps.map(
             subStep =>
-              <div key={subStep.title} className="sub-step">
+              <div className="sub-step" key={subStep.title}>
                 <p>{subStep.title}</p>
-                {subStep.value}
+                <p>{subStep.value}</p>
               </div>
           )}
         </div>

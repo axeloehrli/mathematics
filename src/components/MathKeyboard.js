@@ -18,8 +18,6 @@ export default function MathKeyboard(props) {
     }, 100)
   }
 
-  const mathKeyStyle = { color: "red" }
-
   let divs = keys.map(key =>
     <div
       key={keys.indexOf(key)}

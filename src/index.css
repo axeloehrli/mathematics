@@ -4,26 +4,71 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body {
-}
-
-header {
+nav {
   height: 60px;
   display: flex;
   align-items: center;
   background-color: rgb(255, 55, 55);
 }
 
-header > img {
+nav > img {
+  cursor: pointer;
   height: 26px;
   padding: 18px;
 }
 
-header > h1 {
+nav > h1 {
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -1px;
   color: rgb(241, 241, 241);
+}
+
+.nav-menu {
+  padding-top: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100vh;
+  left: -100%;
+  transition: all 0.4s ease;
+  background-color: white;
+}
+
+.nav-menu > a {
+  text-decoration: none;
+}
+
+.nav-menu.active {
+  left: 0;
+}
+
+.nav-menu-mask {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  transition: all 0.4s ease;
+  background-color: transparent;
+}
+
+.nav-menu-mask.active {
+  left: 0;
+  background-color: rgba(51, 51, 51, 0.822);
+}
+
+.menu-item {
+  color: rgb(96, 103, 105);
+  padding: 16px 0;
+  margin: 0 16px;
+  border-bottom: 1px solid rgb(211, 211, 211);
+}
+
+.menu-item > p {
+  font-size: 16px;
+  color: rgb(96, 103, 105);
 }
 
 .formula {
@@ -45,10 +90,7 @@ header > h1 {
   display: flex;
   padding: 4px 0;
   border-bottom: 1px solid rgb(202, 202, 202);
-}
-
-.red-border {
-
+  justify-content: space-between;
 }
 
 label {
@@ -56,11 +98,10 @@ label {
 }
 
 input {
-  padding-right: 6px;
-  width: 100%;
-  flex: 1;
+  box-sizing: border-box;
+  padding-right: 24px;
+  text-align: right;
   border: none;
-  text-align: end;
   font-size: 16px;
 }
 
@@ -68,13 +109,7 @@ input:focus {
   outline: none;
 }
 
-.user-function {
-  margin-left: 24px;
-  margin-bottom: 24px;  
-  width: fit-content;
-  font-weight: bolder;
-  color: rgb(61, 56, 56)
-}
+
 
 button {
   margin-left: 24px;
@@ -86,26 +121,18 @@ button {
 }
 
 
-
-.steps {
-  display: flex;
-  flex-direction: column;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 4px 12px;
-
-}
-
 .step {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid rgb(241, 241, 241);
 }
 
-
 .step > * {
   padding: 12px 24px;
 }
 
 .step-main {
+  cursor: pointer;
   display: flex;
   align-items: center;
 }
@@ -123,15 +150,10 @@ button {
   color: gray;
 }
 
-.vertex-to-standard {
-}
-
 .math-keyboard {
-  padding: 6px;
-  position: absolute;
+  position: sticky;
   bottom: 0;
-  left: 0;
-  right: 0;
+  padding: 6px;
   height: 200px;
   background-color: rgb(234, 234, 234);
   display: grid;
@@ -150,10 +172,21 @@ button {
   transform: scale(-1);
 }
 
-.standard-function {
-  padding-top: 12px;
+.user-function {
   padding-left: 24px;
-  font-size: 18px;
-  font-weight: bolder;
+  padding-bottom: 12px;
+  width: fit-content;
   color: rgb(255, 55, 55);
+}
+
+.standard-function {
+  padding-left: 24px;
+  padding-bottom: 12px;
+  color: rgb(255, 55, 55);
+}
+
+.form-label {
+  padding-left: 24px;
+  padding-bottom: 2px;
+  font-weight: 600;
 }
