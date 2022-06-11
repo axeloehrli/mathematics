@@ -4,12 +4,13 @@ import Navbar from "../components/Navbar";
 import Step from "../components/Step"
 
 export default function VertexToStandard() {
-  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 1, h: 0, k: 0 }))
+  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 2, h: -7, k: -32 }))
   const [standardFunction, setStandardFunction] = useState(null)
 
   const [selectedInput, setSelectedInput] = useState()
 
-  const [steps, setSteps] = useState([])
+  const [convertToStandardSteps, setConvertToStandardSteps] = useState([])
+  const [findRootsSteps, setFindRootsSteps] = useState([])
 
   const handleInputClick = e => {
     e.preventDefault()
@@ -23,7 +24,8 @@ export default function VertexToStandard() {
     return true
   }
   const convertToStandard = () => {
-    setSteps(vertexFunction.vertexToStandardSteps())
+    setConvertToStandardSteps(vertexFunction.vertexToStandardSteps())
+    setFindRootsSteps(vertexFunction.findRootsSteps().steps)
     setStandardFunction(vertexFunction.fullStandardForm())
   }
   const handleChange = (e) => {
@@ -78,10 +80,26 @@ export default function VertexToStandard() {
       {standardFunction !== null && <p className="standard-function">{standardFunction}</p>}
 
       <p className="form-label">Vertex:</p>
-      {standardFunction !== null && <p style={{marginBottom:"12px"}} className="standard-function">{vertexFunction.vertex()}</p>}
-      
-      {steps.length !== 0 && <p className="form-label">Steps to find standard form:</p>}
-      {steps.length !== 0 && steps.map((step, index) => <Step paddingTop={index === 0 ? true : false} key={step.title} step={step} />)}
+      {standardFunction !== null && <p className="standard-function">{vertexFunction.vertex}</p>}
+
+      <p className="form-label">Roots:</p>
+      {standardFunction !== null && <p className="standard-function">
+        x₁ : {vertexFunction.roots.x1}<br />
+        x₂ : {vertexFunction.roots.x2}
+      </p>}
+
+      {convertToStandardSteps.length !== 0 && (
+        <div className="steps-container">
+          <p className="form-label">Steps to find standard form:</p>
+          {convertToStandardSteps.map((step, index) => <Step paddingTop={index === 0 ? true : false} key={step.title} step={step} />)}
+        </div>)}
+
+      {findRootsSteps.length !== 0 && (
+        <div className="steps-container">
+          <p className="form-label">Steps to find roots:</p>
+          {findRootsSteps.map((step, index) => <Step paddingTop={index === 0 ? true : false} key={step.title} step={step} />)}
+        </div>
+      )}
     </div>
   )
 }

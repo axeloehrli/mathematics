@@ -3,7 +3,10 @@ export default class VertexFunction {
     this.a = (values.a);
     this.h = (values.h);
     this.k = (values.k);
+    this.vertex = this.vertex()
+    this.roots = this.findRootsSteps().roots
     this.standardForm = this.fullStandardForm()
+
   }
 
   isInputValid(input) {
@@ -18,12 +21,12 @@ export default class VertexFunction {
   }
 
   fullVertexFormula() {
-    const a = this.isInputValid(parseFloat(this.a)) ? parseFloat(this.a) : 1
-    const h = this.isInputValid(parseFloat(this.h)) ? parseFloat(this.h) : 0
-    const k = this.isInputValid(parseFloat(this.k)) ? parseFloat(this.k) : 0
+    const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
+    const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
+    const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
 
     const firstTerm = a === 1 ? "" : a
-    const secondTerm = h === 0  ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
+    const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
     const thirdTerm = k === 0 ? "" : `${k > 0 ? "+" : ""}${k}`
 
     return `y = ${firstTerm}${secondTerm}${thirdTerm}`
@@ -34,42 +37,170 @@ export default class VertexFunction {
     return this.vertexToStandardSteps()[3].value
   }
 
+  findRootsSteps() {
+    const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
+    const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
+    const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
+
+    const firstTerm = a === 1 ? "" : a
+    const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
+    const thirdTerm = k === 0 ? "" : `${k > 0 ? "+" : ""}${k}`
+
+
+    const step1 = {
+      title: "Equal function to 0",
+      value: `${firstTerm}${secondTerm}${thirdTerm} = 0`
+    }
+
+    const equation = this.solveEquation(a, h, k)
+    const step2 = {
+      title: "Solve equation",
+      subSteps: equation.subSteps
+    }
+    return {
+      steps: [step1, step2],
+      roots: equation.result
+    }
+  }
+
+  solveEquation(a, h, k) {
+    const firstTerm = a === 1 ? "" : a
+    const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
+
+    /* STEP 1 */
+    /*  Convert number into opposite number 
+     since we're moving it to the other side of the equation */
+    const step1Values = {
+      rightSideValue: (k > 0) ? (0 - k) : (0 + k * -1)
+    }
+    const step1 = {
+      title: "Move 'h' to the other side of the equation",
+      value: `${firstTerm}${secondTerm} = ${step1Values.rightSideValue}`
+    }
+
+    /* STEP 2 */
+    const step2Values = {
+      rightSideValue: step1Values.rightSideValue / a
+    }
+    const step2 = {
+      title: "Divide right side by 'a'",
+      value: `${secondTerm} = ${step2Values.rightSideValue}`
+    }
+
+    /* STEP 3 */
+    let step3
+    if (h === 0) {
+      step3 = {
+        title: "Move exponent to the right side as square root",
+        value: `x = √${step2Values.rightSideValue}`
+      }
+    } else {
+      step3 = {
+        title: "Move exponent to the right side as square root",
+        value: `(x${h * -1 > 0 ? "+" : ""}${h * -1}) = √${step2Values.rightSideValue}`
+      }
+    }
+
+
+    /* STEP 4 */
+    let step4
+    const step4Values = {
+      rightSideValue: parseFloat(Math.sqrt(step2Values.rightSideValue).toFixed(2))
+    }
+    if (h === 0) {
+      step4 = {
+        title: "Solve square root and use absolute value",
+        value: `|x| = ${step4Values.rightSideValue}`
+      }
+    } else {
+      step4 = {
+        title: "Solve square root and use absolute value",
+        value: `|x${h * -1 > 0 ? "+" : ""}${h * -1}| = ${step4Values.rightSideValue}`
+      }
+    }
+
+
+    /* STEP 5 */
+    const step5Values = {
+      rightSideValue: -1 * step4Values.rightSideValue,
+      x: h > 0 ? -1 * step4Values.rightSideValue + h : -1 * step4Values.rightSideValue - h * -1
+    }
+
+    let step5
+    if (h === 0) {
+      step5 = {
+        title: "Solution 1",
+        value: `x = ${step4Values.rightSideValue * -1}`
+      }
+    } else {
+      step5 = {
+        title: "Solution 1",
+        value: `x = ${step5Values.rightSideValue}${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step5Values.x}`
+      }
+    }
+
+
+
+    /* STEP 6 */
+    const step6Values = {
+      rightSideValue: step4Values.rightSideValue,
+      x: h > 0 ? step4Values.rightSideValue + h : step4Values.rightSideValue - h * -1
+    }
+    let step6
+    if (h === 0) {
+      step6 = {
+        title: "Solution 2",
+        value: `x = ${step4Values.rightSideValue}`
+      }
+    } else {
+      step6 = {
+        title: "Solution 2",
+        value: `x = ${step6Values.rightSideValue}${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step6Values.x}`
+      }
+    }
+
+
+    return {
+      subSteps: [step1, step2, step3, step4, step5, step6],
+      result: {
+        x1: step5Values.x,
+        x2: step6Values.x
+      }
+    }
+  }
+
   vertexToStandardSteps() {
-    const a = this.isInputValid(parseFloat(this.a)) ? parseFloat(this.a) : 1
-    const h = this.isInputValid(parseFloat(this.h)) ? parseFloat(this.h) : 0
-    const k = this.isInputValid(parseFloat(this.k)) ? parseFloat(this.k) : 0
+    const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
+    const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
+    const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
 
     if (h === 0) return []
 
     const multiplyBinomial = this.multiplyBinomial()
-    let step1
-    let step2
-    let step3
-    let step4
 
-    step1 = {
+    const step1 = {
       title: "Multiply binomials",
       subSteps: multiplyBinomial.steps
     }
-    step2 = {
+    const step2 = {
       title: "Replace result in formula",
       value: `
       y = ${a}
       (${multiplyBinomial.result})
       ${k > 0 ? "+" : ""}${k !== 0 ? k : ""}`
     }
-    step3 = {
+    const step3 = {
       title: "Apply distributive property",
       value: `
-      y = ${a}x²
+      y = ${a === 1 ? "" : a}x²
       ${a * multiplyBinomial.firstTerm > 0 ? "+" : ""}${parseFloat((a * multiplyBinomial.firstTerm).toFixed(2))}x
       ${a * multiplyBinomial.secondTerm > 0 ? "+" : ""}${parseFloat((a * multiplyBinomial.secondTerm).toFixed(2))}
       ${k > 0 ? "+" : ""}${k !== 0 ? k : ""}`
     }
-    step4 = {
+    const step4 = {
       title: "Combine similar values",
       value: `
-      y = ${a}x²
+      y = ${a === 1 ? "" : a}x²
       ${a * multiplyBinomial.firstTerm > 0 ? "+" : ""} ${parseFloat((a * multiplyBinomial.firstTerm).toFixed(2))}x
       ${a * multiplyBinomial.secondTerm + k > 0 ? "+" : ""}${parseFloat((a * multiplyBinomial.secondTerm + k).toFixed(2))}`
     }
