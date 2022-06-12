@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/mathematics/static/css/main.990af3de.css",
-    "main.js": "/mathematics/static/js/main.e5a4d235.js",
+    "main.js": "/mathematics/static/js/main.8c8d399b.js",
     "index.html": "/mathematics/index.html",
     "static/media/close.svg": "/mathematics/static/media/close.3e80d6366dce91734f840e0cf09e7814.svg",
     "static/media/open.svg": "/mathematics/static/media/open.1adc01de05189343838be43dd1b76d4c.svg",
     "static/media/menu.svg": "/mathematics/static/media/menu.2512f07f68b41bea98fe73d8516c78d6.svg",
     "main.990af3de.css.map": "/mathematics/static/css/main.990af3de.css.map",
-    "main.e5a4d235.js.map": "/mathematics/static/js/main.e5a4d235.js.map"
+    "main.8c8d399b.js.map": "/mathematics/static/js/main.8c8d399b.js.map"
   },
   "entrypoints": [
     "static/css/main.990af3de.css",
-    "static/js/main.e5a4d235.js"
+    "static/js/main.8c8d399b.js"
   ]
 }
