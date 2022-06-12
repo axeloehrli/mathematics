@@ -1,5 +1,5 @@
 import React from "react"
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryVoronoiContainer } from "victory"
+import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryVoronoiContainer, VictoryZoomContainer } from "victory"
 export default function VictoryGraph(props) {
   const yPoints = props.function.points.points.map(point => point.y)
   const maxYNumber = Math.max.apply(Math, yPoints)
@@ -20,16 +20,33 @@ export default function VictoryGraph(props) {
   }
   return (
     <VictoryChart
+      standalone={true}
       width={350}
       height={350}
+      padding={{ top: 40, bottom: 40, left: 30, right: 30 }}
       containerComponent={
         <VictoryVoronoiContainer
+          style={{
+            touchAction: "auto"
+          }}
           voronoiBlacklist={["line"]}
-          labels={({ datum }) => `(x:${datum.x} ; y:${datum.y})`}
+          labels={({ datum }) => {
+            if (parseFloat(datum.y) === k) {
+              return `VERTEX (${datum.x} ; ${datum.y})`
+            }
+            if (parseFloat(datum.y) === 0) {
+              return `ROOT (${datum.x} ; ${datum.y})`
+            }
+            if (parseFloat(datum.x) === 0) {
+              return `Y-INTERCEPT (${datum.x} ; ${datum.y})`
+            }
+            return `(${datum.x} ; ${datum.y})`
+          }
+          }
         />
       }
-    > 
-      <VictoryLine 
+    >
+      <VictoryLine
         name="line"
         data={props.function.points.points}
         animate={{
@@ -38,6 +55,7 @@ export default function VictoryGraph(props) {
         }}
       />
       <VictoryScatter
+
         style={{
           data: {
             fill: ({ datum }) => getPointColor(datum)
