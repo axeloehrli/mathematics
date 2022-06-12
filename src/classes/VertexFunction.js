@@ -6,7 +6,60 @@ export default class VertexFunction {
     this.vertex = this.vertex()
     this.roots = this.findRootsSteps().roots
     this.standardForm = this.fullStandardForm()
+    this.points = this.findPoints()
+  }
 
+  findPoints() {
+    const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
+    const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
+    const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
+
+    const startValue = h
+    let endValue
+    if (isNaN(this.roots.x2)) {
+      endValue = h + 5
+    } else {
+      endValue = this.roots.x2 + 3
+    }
+
+    const points = []
+
+    for (let i = startValue; i <= endValue; i++) {
+      const solveParentheses = Math.pow((i - h), 2)
+      const multiplyByA = solveParentheses * a
+      const addK = multiplyByA + k
+      points.push({ x: i, y: addK })
+    }
+
+    /* 
+      Starting from the y value of this functions vertex,
+      it replaces x on the 
+    */
+    let count = startValue - 1
+    let currentY = k
+    while (currentY !== points[points.length - 1].y) {
+      const solveParentheses = Math.pow((count - h), 2)
+      const multiplyByA = solveParentheses * a
+      const addK = multiplyByA + k
+      points.unshift({ x: count, y: addK })
+
+      currentY = addK
+      count--
+    }
+    if (
+      !isNaN(this.roots.x1) && 
+      !isNaN(this.roots.x2) && 
+      this.roots.x1 !== h && 
+      this.roots.x2 !== h &&
+      !points.filter(e => e.x === this.roots.x1).length > 0 &&
+      !points.filter(e => e.x === this.roots.x2).length > 0 
+      ) {
+      points.push({ x: this.roots.x1, y: 0 })
+      points.push({ x: this.roots.x2, y: 0 })
+    }
+
+    points.sort((a, b) => a.x - b.x)
+    return { points: points, startValue: startValue, endValue: endValue }
   }
 
   isInputValid(input) {

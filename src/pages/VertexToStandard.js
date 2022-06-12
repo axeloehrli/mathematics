@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import VertexFunction from "../classes/VertexFunction";
 import Navbar from "../components/Navbar";
 import Step from "../components/Step"
+import VictoryGraph from "../components/VictoryGraph";
 
 export default function VertexToStandard() {
-  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 2, h: -7, k: -32 }))
+  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a:-2, h: 3, k: 32 }))
   const [standardFunction, setStandardFunction] = useState(null)
 
   const [selectedInput, setSelectedInput] = useState()
@@ -44,7 +45,10 @@ export default function VertexToStandard() {
 
   useEffect(() => {
     convertToStandard()
+    console.log(vertexFunction);
   }, [vertexFunction])
+
+  console.log(vertexFunction.points);
 
   return (
     <div className="vertex-to-standard" >
@@ -73,6 +77,12 @@ export default function VertexToStandard() {
         {!validateInput(vertexFunction.k, true) && <p style={{ color: "red", fontSize: "14px" }}>Invalid number</p>}
 
       </div>
+      <VictoryGraph 
+        function={vertexFunction}
+      />
+     {/*  <Graph 
+        function={vertexFunction}
+      /> */}
       <p className="form-label">Vertex Form:</p>
       {<p className="user-function">{vertexFunction.fullVertexFormula()}</p>}
 
