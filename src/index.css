@@ -25,6 +25,7 @@ nav > h1 {
 }
 
 .nav-menu {
+  z-index: 1;
   padding-top: 14px;
   position: fixed;
   top: 0;
@@ -109,8 +110,6 @@ input:focus {
   outline: none;
 }
 
-
-
 button {
   margin-left: 24px;
   margin-bottom: 24px;
@@ -120,14 +119,20 @@ button {
   color: white;
 }
 
+.steps {
+  padding: 18px 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 .steps-container {
-  margin-bottom: 24px;
+  border-bottom: 1px solid rgb(219, 219, 219);
 }
 
 .step {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid rgb(241, 241, 241);
 }
 
 .step > * {
@@ -176,19 +181,28 @@ button {
 }
 
 .user-function {
-  padding-left: 24px;
   padding-bottom: 12px;
   width: fit-content;
 }
 
-.standard-function {
-  padding-left: 24px;
-  padding-bottom: 12px;
-}
-
 .form-label {
   color: rgb(255, 55, 55);
-  padding-left: 24px;
-  padding-bottom: 2px;
   font-weight: 600;
+}
+
+.steps-title {
+  margin-left: 24px;
+  color: rgb(255, 55, 55);
+  font-weight: 600;
+}
+
+.function-info {
+  padding: 18px 0;
+  margin-left: 24px;
+  margin-right: 24px;
+  border-top: 1px solid rgb(219, 219, 219);
+  border-bottom: 1px solid rgb(219, 219, 219);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

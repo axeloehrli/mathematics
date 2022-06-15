@@ -37,23 +37,34 @@ export default class VertexFunction {
     */
     let count = startValue - 1
     let currentY = k
-    while (currentY !== points[points.length - 1].y) {
-      const solveParentheses = Math.pow((count - h), 2)
-      const multiplyByA = solveParentheses * a
-      const addK = multiplyByA + k
-      points.unshift({ x: count, y: addK })
-
-      currentY = addK
-      count--
+    if (a > 0) {
+      while (currentY < points[points.length - 1].y) {
+        const solveParentheses = Math.pow((count - h), 2)
+        const multiplyByA = solveParentheses * a
+        const addK = multiplyByA + k
+        points.unshift({ x: count, y: addK })
+        currentY = addK
+        count--
+      }
+    } else {
+      while (currentY > points[points.length - 1].y) {
+        const solveParentheses = Math.pow((count - h), 2)
+        const multiplyByA = solveParentheses * a
+        const addK = multiplyByA + k
+        points.unshift({ x: count, y: addK })
+        currentY = addK
+        count--
+      }
     }
+
     if (
-      !isNaN(this.roots.x1) && 
-      !isNaN(this.roots.x2) && 
-      this.roots.x1 !== h && 
+      !isNaN(this.roots.x1) &&
+      !isNaN(this.roots.x2) &&
+      this.roots.x1 !== h &&
       this.roots.x2 !== h &&
       !points.filter(e => e.x === this.roots.x1).length > 0 &&
-      !points.filter(e => e.x === this.roots.x2).length > 0 
-      ) {
+      !points.filter(e => e.x === this.roots.x2).length > 0
+    ) {
       points.push({ x: this.roots.x1, y: 0 })
       points.push({ x: this.roots.x2, y: 0 })
     }
@@ -86,14 +97,56 @@ export default class VertexFunction {
   }
 
   fullStandardForm() {
-    if (this.vertexToStandardSteps()[3] === undefined) return this.fullVertexFormula()
-    return this.vertexToStandardSteps()[3].value
+    if (this.vertexToStandardSteps()[3] === undefined) {
+      if (this.vertexToStandardSteps()[2] === undefined) {
+        return this.fullVertexFormula()
+      } else {
+        return this.vertexToStandardSteps()[2].value
+      }
+    } else {
+      return this.vertexToStandardSteps()[3].value
+    }
+  }
+
+  findYInterceptSteps() {
+    const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
+    const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
+    const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
+
+
+    const firstTerm = a === 1 ? "" : a
+    const thirdTerm = k === 0 ? "" : `${k > 0 ? "+" : ""}${k}`
+
+    const step1 = {
+      title: "Replace 'x' with 0",
+      value:
+      `
+      y = 
+      ${firstTerm}
+      ${h === 0 ? "0²" : `(0${h * -1 > 0 ? "+" : ""}${h * -1})²`}
+      ${thirdTerm}
+      `
+    }
+
+    const result = Math.pow(0-h, 2) + k
+    const step2 = {
+      title: "Solve equation",
+      value: `
+        y = ${result}
+      `
+    }
+
+    return {steps:[step1, step2], result: result}
   }
 
   findRootsSteps() {
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
+
+    if (k === 0) {
+      return { steps: [], roots: { x1: h, x2: h } }
+    }
 
     const firstTerm = a === 1 ? "" : a
     const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
@@ -127,7 +180,7 @@ export default class VertexFunction {
       rightSideValue: (k > 0) ? (0 - k) : (0 + k * -1)
     }
     const step1 = {
-      title: "Move 'h' to the other side of the equation",
+      title: "Move 'k' to the other side of the equation",
       value: `${firstTerm}${secondTerm} = ${step1Values.rightSideValue}`
     }
 
@@ -188,7 +241,7 @@ export default class VertexFunction {
     } else {
       step5 = {
         title: "Solution 1",
-        value: `x = ${step5Values.rightSideValue}${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step5Values.x}`
+        value: `x = ${step5Values.rightSideValue} ${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step5Values.x}`
       }
     }
 
@@ -208,10 +261,9 @@ export default class VertexFunction {
     } else {
       step6 = {
         title: "Solution 2",
-        value: `x = ${step6Values.rightSideValue}${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step6Values.x}`
+        value: `x = ${step6Values.rightSideValue} ${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step6Values.x}`
       }
     }
-
 
     return {
       subSteps: [step1, step2, step3, step4, step5, step6],
@@ -232,7 +284,7 @@ export default class VertexFunction {
     const multiplyBinomial = this.multiplyBinomial()
 
     const step1 = {
-      title: "Multiply binomials",
+      title: "Expand binomials",
       subSteps: multiplyBinomial.steps
     }
     const step2 = {

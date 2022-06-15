@@ -49,10 +49,6 @@ export default function VictoryGraph(props) {
       <VictoryLine
         name="line"
         data={props.function.points.points}
-        animate={{
-          duration: 1000,
-          onLoad: { duration: 1000 }
-        }}
       />
       <VictoryScatter
 
@@ -62,10 +58,6 @@ export default function VictoryGraph(props) {
           }
         }}
         data={props.function.points.points}
-        animate={{
-          duration: 1000,
-          onLoad: { duration: 1000 }
-        }}
       />
 
       <VictoryAxis

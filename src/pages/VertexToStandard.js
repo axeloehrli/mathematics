@@ -5,13 +5,14 @@ import Step from "../components/Step"
 import VictoryGraph from "../components/VictoryGraph";
 
 export default function VertexToStandard() {
-  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a:-2, h: 3, k: 32 }))
+  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 1, h: 2, k: -3 }))
   const [standardFunction, setStandardFunction] = useState(null)
 
   const [selectedInput, setSelectedInput] = useState()
 
   const [convertToStandardSteps, setConvertToStandardSteps] = useState([])
   const [findRootsSteps, setFindRootsSteps] = useState([])
+  const [findYInterceptSteps, setFindYInterceptSteps] = useState([])
 
   const handleInputClick = e => {
     e.preventDefault()
@@ -26,8 +27,9 @@ export default function VertexToStandard() {
   }
   const convertToStandard = () => {
     setConvertToStandardSteps(vertexFunction.vertexToStandardSteps())
-    setFindRootsSteps(vertexFunction.findRootsSteps().steps)
     setStandardFunction(vertexFunction.fullStandardForm())
+    setFindRootsSteps(vertexFunction.findRootsSteps().steps)
+    setFindYInterceptSteps(vertexFunction.findYInterceptSteps().steps)
   }
   const handleChange = (e) => {
     // Only allows numbers, - and .
@@ -45,10 +47,7 @@ export default function VertexToStandard() {
 
   useEffect(() => {
     convertToStandard()
-    console.log(vertexFunction);
   }, [vertexFunction])
-
-  console.log(vertexFunction.points);
 
   return (
     <div className="vertex-to-standard" >
@@ -77,39 +76,54 @@ export default function VertexToStandard() {
         {!validateInput(vertexFunction.k, true) && <p style={{ color: "red", fontSize: "14px" }}>Invalid number</p>}
 
       </div>
-      <VictoryGraph 
+      <VictoryGraph
         function={vertexFunction}
       />
-     {/*  <Graph 
-        function={vertexFunction}
-      /> */}
-      <p className="form-label">Vertex Form:</p>
-      {<p className="user-function">{vertexFunction.fullVertexFormula()}</p>}
 
-      <p className="form-label">Standard Form:</p>
-      {standardFunction !== null && <p className="standard-function">{standardFunction}</p>}
-
-      <p className="form-label">Vertex:</p>
-      {standardFunction !== null && <p className="standard-function">{vertexFunction.vertex}</p>}
-
-      <p className="form-label">Roots:</p>
-      {standardFunction !== null && <p className="standard-function">
-        x₁ : {vertexFunction.roots.x1}<br />
-        x₂ : {vertexFunction.roots.x2}
-      </p>}
-
-      {convertToStandardSteps.length !== 0 && (
-        <div className="steps-container">
-          <p className="form-label">Steps to find standard form:</p>
-          {convertToStandardSteps.map((step, index) => <Step paddingTop={index === 0 ? true : false} key={step.title} step={step} />)}
-        </div>)}
-
-      {findRootsSteps.length !== 0 && (
-        <div className="steps-container">
-          <p className="form-label">Steps to find roots:</p>
-          {findRootsSteps.map((step, index) => <Step paddingTop={index === 0 ? true : false} key={step.title} step={step} />)}
+      <div className="function-info">
+        <div className="function-info-container">
+          <p className="form-label">Vertex Form:</p>
+          <p className="function-info-p">{vertexFunction.fullVertexFormula()}</p>
         </div>
-      )}
+        <div className="function-info-container">
+          <p className="form-label">Standard Form:</p>
+          <p className="function-info-p">{standardFunction}</p>
+        </div>
+        <div className="function-info-container">
+          <p className="form-label">Vertex:</p>
+          <p className="function-info-p">{vertexFunction.vertex}</p>
+        </div>
+        <div className="function-info-container">
+          <p className="form-label">Roots:</p>
+          <p className="function-info-p">
+            {vertexFunction.roots.x1 === vertexFunction.roots.x2 ?
+              `x: ${vertexFunction.roots.x1}` :
+              `x₁ : ${vertexFunction.roots.x1}
+            x₂ : ${vertexFunction.roots.x2}`
+            }
+            <br />
+          </p>
+        </div>
+      </div>
+      <div className="steps">
+        {convertToStandardSteps.length !== 0 && (
+          <div className="steps-container">
+            <p className="steps-title">Steps to find standard form:</p>
+            {convertToStandardSteps.map(step => <Step key={step.title} step={step} />)}
+          </div>)}
+        {findRootsSteps.length !== 0 && (
+          <div className="steps-container">
+            <p className="steps-title">Steps to find roots:</p>
+            {findRootsSteps.map(step=> <Step key={step.title} step={step} />)}
+          </div>
+        )}
+        {findYInterceptSteps.length !== 0 && (
+          <div className="steps-container">
+            <p className="steps-title">Steps to find Y-Intercept:</p>
+            {findYInterceptSteps.map(step => <Step key={step.title} step={step}/>)}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

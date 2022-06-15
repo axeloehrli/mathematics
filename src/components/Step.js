@@ -7,7 +7,7 @@ export default function Step(props) {
   const [show, setShow] = useState(false)
 
   return (
-    <div className={props.paddingTop ? "step padding" : "step"} >
+    <div className="step" >
       <div className="step-main" onClick={() => { setShow(prevState => !prevState) }}>
         <p className="step-title">{step.title}</p>
         <img src={show ? CloseIcon : OpenIcon} alt="icon" />
