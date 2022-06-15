@@ -1,5 +1,5 @@
 import React from "react"
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryVoronoiContainer, VictoryZoomContainer } from "victory"
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryVoronoiContainer, VictoryZoomContainer } from "victory"
 export default function VictoryGraph(props) {
   const yPoints = props.function.points.points.map(point => point.y)
   const maxYNumber = Math.max.apply(Math, yPoints)
