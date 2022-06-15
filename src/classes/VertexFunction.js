@@ -31,10 +31,6 @@ export default class VertexFunction {
       points.push({ x: i, y: addK })
     }
 
-    /* 
-      Starting from the y value of this functions vertex,
-      it replaces x on the 
-    */
     let count = startValue - 1
     let currentY = k
     if (a > 0) {
