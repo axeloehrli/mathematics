@@ -5,8 +5,7 @@ import Step from "../components/Step"
 import VictoryGraph from "../components/VictoryGraph";
 
 export default function VertexToStandard() {
-  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 1, h: 2, k: -3 }))
-  const [standardFunction, setStandardFunction] = useState(null)
+  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 3.25, h: -2.9, k: -10 }))
 
   const [selectedInput, setSelectedInput] = useState()
 
@@ -27,10 +26,10 @@ export default function VertexToStandard() {
   }
   const convertToStandard = () => {
     setConvertToStandardSteps(vertexFunction.vertexToStandardSteps())
-    setStandardFunction(vertexFunction.fullStandardForm())
     setFindRootsSteps(vertexFunction.findRootsSteps().steps)
     setFindYInterceptSteps(vertexFunction.findYInterceptSteps().steps)
   }
+
   const handleChange = (e) => {
     // Only allows numbers, - and .
     const regex1 = new RegExp(/^[-\d. ]*$/)
@@ -76,32 +75,44 @@ export default function VertexToStandard() {
         {!validateInput(vertexFunction.k, true) && <p style={{ color: "red", fontSize: "14px" }}>Invalid number</p>}
 
       </div>
+
       <VictoryGraph
         function={vertexFunction}
       />
 
       <div className="function-info">
         <div className="function-info-container">
-          <p className="form-label">Vertex Form:</p>
-          <p className="function-info-p">{vertexFunction.fullVertexFormula()}</p>
+          <p className="function-info-label">Vertex Form:</p>
+          <p>{vertexFunction.vertexForm}</p>
         </div>
         <div className="function-info-container">
-          <p className="form-label">Standard Form:</p>
-          <p className="function-info-p">{standardFunction}</p>
+          <p className="function-info-label">Standard Form:</p>
+          <p>{vertexFunction.standardForm}</p>
         </div>
         <div className="function-info-container">
-          <p className="form-label">Vertex:</p>
-          <p className="function-info-p">{vertexFunction.vertex}</p>
+          <p className="function-info-label">Vertex:</p>
+          <p>
+            (x: {vertexFunction.vertex.x}, y: {vertexFunction.vertex.y})
+          </p>
         </div>
         <div className="function-info-container">
-          <p className="form-label">Roots:</p>
+          <p className="function-info-label">Roots:</p>
+          {
+            vertexFunction.roots.x1 === vertexFunction.roots.x2 
+            ? 
+            <p>x: {vertexFunction.roots.x1}</p> 
+            : 
+            <p>
+              x₁ : {vertexFunction.roots.x1}
+              <br></br>
+              x₂ : {vertexFunction.roots.x2}
+            </p>
+          }   
+        </div>
+        <div className="function-info-container">
+          <p className="form-label">Y-Intercept:</p>
           <p className="function-info-p">
-            {vertexFunction.roots.x1 === vertexFunction.roots.x2 ?
-              `x: ${vertexFunction.roots.x1}` :
-              `x₁ : ${vertexFunction.roots.x1}
-            x₂ : ${vertexFunction.roots.x2}`
-            }
-            <br />
+            (x: 0, y: {vertexFunction.YIntercept})
           </p>
         </div>
       </div>

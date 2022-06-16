@@ -3,8 +3,10 @@ export default class VertexFunction {
     this.a = (values.a);
     this.h = (values.h);
     this.k = (values.k);
-    this.vertex = this.vertex()
+    this.vertex = this.getVertex()
     this.roots = this.findRootsSteps().roots
+    this.YIntercept = this.findYInterceptSteps().result
+    this.vertexForm = this.fullVertexForm()
     this.standardForm = this.fullStandardForm()
     this.points = this.findPoints()
   }
@@ -63,6 +65,15 @@ export default class VertexFunction {
     ) {
       points.push({ x: this.roots.x1, y: 0 })
       points.push({ x: this.roots.x2, y: 0 })
+      points.sort((a, b) => a.x - b.x)
+    }
+
+    if(a > 0 && this.YIntercept > this.vertex.y && this.YIntercept < points[points.length -1].y) {
+      points.push({x: 0, y:this.YIntercept})
+      console.log("hello");
+    } else if (a < 0 && this.YIntercept < this.vertex.y && this.YIntercept > points[points.length -1].y) {
+      points.push({x: 0, y:this.YIntercept})
+      console.log("hello");
     }
 
     points.sort((a, b) => a.x - b.x)
@@ -70,17 +81,18 @@ export default class VertexFunction {
   }
 
   isInputValid(input) {
-    if (isNaN(input)) return false
+    if (isNaN(parseFloat(input))) return false
     return true
   }
 
-  vertex() {
-    return `
-    (${!this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)}, 
-    ${!this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)})`
+  getVertex() {
+    return {
+      x: this.isInputValid(this.h) ? parseFloat(this.h) : 0,
+      y: this.isInputValid(this.k) ? parseFloat(this.k) : 0
+    }
   }
 
-  fullVertexFormula() {
+  fullVertexForm() {
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
@@ -95,7 +107,7 @@ export default class VertexFunction {
   fullStandardForm() {
     if (this.vertexToStandardSteps()[3] === undefined) {
       if (this.vertexToStandardSteps()[2] === undefined) {
-        return this.fullVertexFormula()
+        return this.vertexForm
       } else {
         return this.vertexToStandardSteps()[2].value
       }
@@ -122,9 +134,9 @@ export default class VertexFunction {
       ${h === 0 ? "0²" : `(0${h * -1 > 0 ? "+" : ""}${h * -1})²`}
       ${thirdTerm}
       `
-    }
+    } 
 
-    const result = Math.pow(0-h, 2) + k
+    const result = a * Math.pow(0 - h, 2) + k
     const step2 = {
       title: "Solve equation",
       value: `

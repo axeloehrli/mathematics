@@ -1,5 +1,5 @@
 import React from "react"
-import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryVoronoiContainer, VictoryZoomContainer } from "victory"
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryVoronoiContainer } from "victory"
 export default function VictoryGraph(props) {
   const yPoints = props.function.points.points.map(point => point.y)
   const maxYNumber = Math.max.apply(Math, yPoints)
@@ -40,7 +40,8 @@ export default function VictoryGraph(props) {
             if (parseFloat(datum.x) === 0) {
               return `Y-INTERCEPT (${datum.x} ; ${datum.y})`
             }
-            return `(${datum.x} ; ${datum.y})`
+            
+            return `(${Math.round(datum.x * 100) / 100} ; ${Math.round(datum.y * 100) / 100})`
           }
           }
         />
