@@ -1,8 +1,11 @@
+import stringsES from "../stringsES";
+
 export default class VertexFunction {
-  constructor(values) {
+  constructor(values, strings) {
     this.a = (values.a);
     this.h = (values.h);
     this.k = (values.k);
+    this.strings = strings;
     this.vertex = this.getVertex()
     this.roots = this.findRootsSteps().roots
     this.YIntercept = this.findYInterceptSteps().result
@@ -45,7 +48,7 @@ export default class VertexFunction {
         count--
       }
     } else {
-      while (currentY > points[points.length - 1].y) {
+      while (currentY >= points[points.length - 1].y) {
         const solveParentheses = Math.pow((count - h), 2)
         const multiplyByA = solveParentheses * a
         const addK = multiplyByA + k
@@ -54,7 +57,11 @@ export default class VertexFunction {
         count--
       }
     }
-
+    /*
+    If there are roots and the points array doesn't
+    already include them, it pushes them to the array
+    and sorts it
+    */
     if (
       !isNaN(this.roots.x1) &&
       !isNaN(this.roots.x2) &&
@@ -68,12 +75,16 @@ export default class VertexFunction {
       points.sort((a, b) => a.x - b.x)
     }
 
+
+    /* 
+    If the Y-Intercept point is between the vertex
+    and the last point of the array, it pushes it 
+    to the points array
+    */
     if(a > 0 && this.YIntercept > this.vertex.y && this.YIntercept < points[points.length -1].y) {
       points.push({x: 0, y:this.YIntercept})
-      console.log("hello");
     } else if (a < 0 && this.YIntercept < this.vertex.y && this.YIntercept > points[points.length -1].y) {
       points.push({x: 0, y:this.YIntercept})
-      console.log("hello");
     }
 
     points.sort((a, b) => a.x - b.x)
@@ -120,13 +131,14 @@ export default class VertexFunction {
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
-
+    const strings = this.strings.steps.findYIntercept
+    
 
     const firstTerm = a === 1 ? "" : a
     const thirdTerm = k === 0 ? "" : `${k > 0 ? "+" : ""}${k}`
 
     const step1 = {
-      title: "Replace 'x' with 0",
+      title: strings.replaceX,
       value:
       `
       y = 
@@ -138,7 +150,7 @@ export default class VertexFunction {
 
     const result = a * Math.pow(0 - h, 2) + k
     const step2 = {
-      title: "Solve equation",
+      title: strings.solveEquation,
       value: `
         y = ${result}
       `
@@ -151,7 +163,7 @@ export default class VertexFunction {
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
-
+    const strings = this.strings.steps.findRoots
     if (k === 0) {
       return { steps: [], roots: { x1: h, x2: h } }
     }
@@ -162,13 +174,13 @@ export default class VertexFunction {
 
 
     const step1 = {
-      title: "Equal function to 0",
+      title: strings.equalFunction,
       value: `${firstTerm}${secondTerm}${thirdTerm} = 0`
     }
 
     const equation = this.solveEquation(a, h, k)
     const step2 = {
-      title: "Solve equation",
+      title: strings.solveEquation,
       subSteps: equation.subSteps
     }
     return {
@@ -180,7 +192,8 @@ export default class VertexFunction {
   solveEquation(a, h, k) {
     const firstTerm = a === 1 ? "" : a
     const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
-
+    const strings = this.strings.steps.findRoots
+    
     /* STEP 1 */
     /*  Convert number into opposite number 
      since we're moving it to the other side of the equation */
@@ -188,7 +201,7 @@ export default class VertexFunction {
       rightSideValue: (k > 0) ? (0 - k) : (0 + k * -1)
     }
     const step1 = {
-      title: "Move 'k' to the other side of the equation",
+      title: strings.subStep1,
       value: `${firstTerm}${secondTerm} = ${step1Values.rightSideValue}`
     }
 
@@ -197,7 +210,7 @@ export default class VertexFunction {
       rightSideValue: step1Values.rightSideValue / a
     }
     const step2 = {
-      title: "Divide right side by 'a'",
+      title: strings.subStep2,
       value: `${secondTerm} = ${step2Values.rightSideValue}`
     }
 
@@ -205,12 +218,12 @@ export default class VertexFunction {
     let step3
     if (h === 0) {
       step3 = {
-        title: "Move exponent to the right side as square root",
+        title: strings.subStep3,
         value: `x = √${step2Values.rightSideValue}`
       }
     } else {
       step3 = {
-        title: "Move exponent to the right side as square root",
+        title: strings.subStep3,
         value: `(x${h * -1 > 0 ? "+" : ""}${h * -1}) = √${step2Values.rightSideValue}`
       }
     }
@@ -223,12 +236,12 @@ export default class VertexFunction {
     }
     if (h === 0) {
       step4 = {
-        title: "Solve square root and use absolute value",
+        title: strings.subStep4,
         value: `|x| = ${step4Values.rightSideValue}`
       }
     } else {
       step4 = {
-        title: "Solve square root and use absolute value",
+        title: strings.subStep4,
         value: `|x${h * -1 > 0 ? "+" : ""}${h * -1}| = ${step4Values.rightSideValue}`
       }
     }
@@ -243,12 +256,12 @@ export default class VertexFunction {
     let step5
     if (h === 0) {
       step5 = {
-        title: "Solution 1",
+        title: strings.subStep5,
         value: `x = ${step4Values.rightSideValue * -1}`
       }
     } else {
       step5 = {
-        title: "Solution 1",
+        title: strings.subStep5,
         value: `x = ${step5Values.rightSideValue} ${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step5Values.x}`
       }
     }
@@ -263,12 +276,12 @@ export default class VertexFunction {
     let step6
     if (h === 0) {
       step6 = {
-        title: "Solution 2",
+        title: strings.subStep6,
         value: `x = ${step4Values.rightSideValue}`
       }
     } else {
       step6 = {
-        title: "Solution 2",
+        title: strings.subStep6,
         value: `x = ${step6Values.rightSideValue} ${h > 0 ? "+" : ""}${h !== 0 ? h : ""} = ${step6Values.x}`
       }
     }
@@ -283,27 +296,26 @@ export default class VertexFunction {
   }
 
   vertexToStandardSteps() {
+    const strings = this.strings.steps.findStandardForm
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
 
     if (h === 0) return []
-
     const multiplyBinomial = this.multiplyBinomial()
-
     const step1 = {
-      title: "Expand binomials",
+      title: strings.expandBinomials,
       subSteps: multiplyBinomial.steps
     }
     const step2 = {
-      title: "Replace result in formula",
+      title:  strings.replaceResult,
       value: `
       y = ${a}
       (${multiplyBinomial.result})
       ${k > 0 ? "+" : ""}${k !== 0 ? k : ""}`
     }
     const step3 = {
-      title: "Apply distributive property",
+      title: strings.applyDist,
       value: `
       y = ${a === 1 ? "" : a}x²
       ${a * multiplyBinomial.firstTerm > 0 ? "+" : ""}${parseFloat((a * multiplyBinomial.firstTerm).toFixed(2))}x
@@ -311,7 +323,7 @@ export default class VertexFunction {
       ${k > 0 ? "+" : ""}${k !== 0 ? k : ""}`
     }
     const step4 = {
-      title: "Combine similar values",
+      title: strings.combineValues,
       value: `
       y = ${a === 1 ? "" : a}x²
       ${a * multiplyBinomial.firstTerm > 0 ? "+" : ""} ${parseFloat((a * multiplyBinomial.firstTerm).toFixed(2))}x
@@ -324,19 +336,19 @@ export default class VertexFunction {
   multiplyBinomial() {
     // Multiply by -1 since h appears as opposite in vertex form
     const h = parseFloat(this.h) * -1
-
+    const strings = this.strings.steps.findStandardForm
     const step1 = {
-      title: "Simplify binomial",
+      title: strings.simplifyBinomials,
       value: `(x${h > 0 ? "+" : ""}${h} ) . (x${h > 0 ? "+" : ""}${h})`
     }
 
     const step2 = {
-      title: "Apply distributive property",
+      title: strings.applyDist,
       value: `x²${h > 0 ? "+" : ""}${h}x${h > 0 ? "+" : ""}${h}x${h * h > 0 ? "+" : ""}${parseFloat((h * h).toFixed(2))}`
     }
 
     const step3 = {
-      title: "Combine similar values",
+      title: strings.combineValues,
       value: `x²${h + h > 0 ? "+" : ""}${h + h}x${h * h > 0 ? "+" : ""}${parseFloat((h * h).toFixed(2))}`
     }
 

@@ -1,6 +1,8 @@
 import React from "react"
 import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryVoronoiContainer } from "victory"
 export default function VictoryGraph(props) {
+  const strings = props.strings
+
   const yPoints = props.function.points.points.map(point => point.y)
   const maxYNumber = Math.max.apply(Math, yPoints)
   const minYNumber = Math.min.apply(Math, yPoints)
@@ -32,13 +34,13 @@ export default function VictoryGraph(props) {
           voronoiBlacklist={["line"]}
           labels={({ datum }) => {
             if (parseFloat(datum.y) === k) {
-              return `VERTEX (${datum.x} ; ${datum.y})`
+              return `${strings.vertex} \n (${datum.x} ; ${datum.y})`
             }
             if (parseFloat(datum.y) === 0) {
-              return `ROOT (${datum.x} ; ${datum.y})`
+              return `${strings.root} \n (${datum.x} ; ${datum.y})`
             }
             if (parseFloat(datum.x) === 0) {
-              return `Y-INTERCEPT (${datum.x} ; ${datum.y})`
+              return `${strings.YIntercept} \n (${datum.x} ; ${datum.y})`
             }
             
             return `(${Math.round(datum.x * 100) / 100} ; ${Math.round(datum.y * 100) / 100})`

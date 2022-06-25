@@ -24,6 +24,12 @@ nav > h1 {
   color: rgb(241, 241, 241);
 }
 
+.language {
+  padding-right: 24px;
+  margin-left: auto;
+  color: white;
+}
+
 .nav-menu {
   z-index: 1;
   padding-top: 14px;

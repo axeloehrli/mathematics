@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import VertexFunction from "../classes/VertexFunction";
 import Navbar from "../components/Navbar";
 import Step from "../components/Step"
 import VictoryGraph from "../components/VictoryGraph";
 
-export default function VertexToStandard() {
-  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 3.25, h: -2.9, k: -10 }))
+export default function VertexToStandard(props) {
+  const strings = props.strings
+
+  const [vertexFunction, setVertexFunction] = useState(new VertexFunction({ a: 3.25, h: -2.9, k: -10 }, strings))
 
   const [selectedInput, setSelectedInput] = useState()
 
@@ -39,10 +41,27 @@ export default function VertexToStandard() {
         {
           ...prevState,
           [e.target.id]: e.target.value
-        }
+        },
+        strings
       )
     })
   }
+
+  /* 
+    Every time language is changed,
+    set a new Vertex Function with 
+    the new strings.
+  */
+  useEffect(() => {
+    setVertexFunction(prevState => {
+      return new VertexFunction(
+        {
+          ...prevState,
+        },
+        strings
+      )
+    })
+  }, [strings])
 
   useEffect(() => {
     convertToStandard()
@@ -50,9 +69,9 @@ export default function VertexToStandard() {
 
   return (
     <div className="vertex-to-standard" >
-      <Navbar />
+      <Navbar onLanguageClick={props.onLanguageClick} language={props.language} strings={props.strings} />
       <p className="formula">
-        Vertex form: y = a(x-h)<sup>2</sup> + k
+        {strings.vertexForm}: y = a(x-h)<sup>2</sup> + k
       </p>
       <div className="inputs">
         <div className="input-container" style={selectedInput === "a" ? { borderBottom: "2px solid #ff3737" } : {}} onClick={handleInputClick} id="a">
@@ -77,40 +96,41 @@ export default function VertexToStandard() {
       </div>
 
       <VictoryGraph
+        strings={strings}
         function={vertexFunction}
       />
 
       <div className="function-info">
         <div className="function-info-container">
-          <p className="function-info-label">Vertex Form:</p>
+          <p className="function-info-label">{strings.vertexForm}:</p>
           <p>{vertexFunction.vertexForm}</p>
         </div>
         <div className="function-info-container">
-          <p className="function-info-label">Standard Form:</p>
+          <p className="function-info-label">{strings.standardForm}:</p>
           <p>{vertexFunction.standardForm}</p>
         </div>
         <div className="function-info-container">
-          <p className="function-info-label">Vertex:</p>
+          <p className="function-info-label">{strings.vertex}:</p>
           <p>
             (x: {vertexFunction.vertex.x}, y: {vertexFunction.vertex.y})
           </p>
         </div>
         <div className="function-info-container">
-          <p className="function-info-label">Roots:</p>
+          <p className="function-info-label">{strings.roots}:</p>
           {
-            vertexFunction.roots.x1 === vertexFunction.roots.x2 
-            ? 
-            <p>x: {vertexFunction.roots.x1}</p> 
-            : 
-            <p>
-              x₁ : {vertexFunction.roots.x1}
-              <br></br>
-              x₂ : {vertexFunction.roots.x2}
-            </p>
-          }   
+            vertexFunction.roots.x1 === vertexFunction.roots.x2
+              ?
+              <p>x: {vertexFunction.roots.x1}</p>
+              :
+              <p>
+                x₁ : {vertexFunction.roots.x1}
+                <br></br>
+                x₂ : {vertexFunction.roots.x2}
+              </p>
+          }
         </div>
         <div className="function-info-container">
-          <p className="form-label">Y-Intercept:</p>
+          <p className="function-info-label">{strings.YIntercept}:</p>
           <p className="function-info-p">
             (x: 0, y: {vertexFunction.YIntercept})
           </p>
@@ -119,19 +139,19 @@ export default function VertexToStandard() {
       <div className="steps">
         {convertToStandardSteps.length !== 0 && (
           <div className="steps-container">
-            <p className="steps-title">Steps to find standard form:</p>
+            <p className="steps-title">{strings.steps.findStandardForm.title}</p>
             {convertToStandardSteps.map(step => <Step key={step.title} step={step} />)}
           </div>)}
         {findRootsSteps.length !== 0 && (
           <div className="steps-container">
-            <p className="steps-title">Steps to find roots:</p>
-            {findRootsSteps.map(step=> <Step key={step.title} step={step} />)}
+            <p className="steps-title">{strings.steps.findRoots.title}</p>
+            {findRootsSteps.map(step => <Step key={step.title} step={step} />)}
           </div>
         )}
         {findYInterceptSteps.length !== 0 && (
           <div className="steps-container">
-            <p className="steps-title">Steps to find Y-Intercept:</p>
-            {findYInterceptSteps.map(step => <Step key={step.title} step={step}/>)}
+            <p className="steps-title">{strings.steps.findYIntercept.title}</p>
+            {findYInterceptSteps.map(step => <Step key={step.title} step={step} />)}
           </div>
         )}
       </div>
