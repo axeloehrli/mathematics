@@ -1,5 +1,3 @@
-import stringsES from "../stringsES";
-
 export default class VertexFunction {
   constructor(values, strings) {
     this.a = (values.a);
@@ -14,13 +12,23 @@ export default class VertexFunction {
     this.points = this.findPoints()
   }
 
+  /* 
+  Finds points for the equation, starting 
+  from the vertex and finishing in an end value
+  */
   findPoints() {
     const a = !this.isInputValid(parseFloat(this.a)) || parseFloat(this.a) === 0 ? 1 : parseFloat(this.a)
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
 
     const startValue = h
+
     let endValue
+    /*
+    If there are no roots, the end value will be
+    5 units to the right, otherwise, it will be 3
+    units after the root.
+    */
     if (isNaN(this.roots.x2)) {
       endValue = h + 5
     } else {
@@ -29,6 +37,9 @@ export default class VertexFunction {
 
     const points = []
 
+    /* 
+    Finds points on the right side of the vertex.
+    */
     for (let i = startValue; i <= endValue; i++) {
       const solveParentheses = Math.pow((i - h), 2)
       const multiplyByA = solveParentheses * a
@@ -36,26 +47,19 @@ export default class VertexFunction {
       points.push({ x: i, y: addK })
     }
 
+    /* 
+    Finds points in the left side of the vertex.
+    The limit is however many points were found 
+    on the right side of the vertex
+    */
     let count = startValue - 1
-    let currentY = k
-    if (a > 0) {
-      while (currentY < points[points.length - 1].y) {
-        const solveParentheses = Math.pow((count - h), 2)
-        const multiplyByA = solveParentheses * a
-        const addK = multiplyByA + k
-        points.unshift({ x: count, y: addK })
-        currentY = addK
-        count--
-      }
-    } else {
-      while (currentY >= points[points.length - 1].y) {
-        const solveParentheses = Math.pow((count - h), 2)
-        const multiplyByA = solveParentheses * a
-        const addK = multiplyByA + k
-        points.unshift({ x: count, y: addK })
-        currentY = addK
-        count--
-      }
+    const limit = points.length - 1
+    for (let i = 0; i < limit; i++) {
+      const solveParentheses = Math.pow((count - h), 2)
+      const multiplyByA = solveParentheses * a
+      const addK = multiplyByA + k
+      points.unshift({ x: count, y: addK })
+      count--
     }
     /*
     If there are roots and the points array doesn't
@@ -78,13 +82,24 @@ export default class VertexFunction {
 
     /* 
     If the Y-Intercept point is between the vertex
-    and the last point of the array, it pushes it 
-    to the points array
+    and the last point of the array, and the 
+    points array doesn't already include it,
+    it pushes it to the points array
     */
-    if(a > 0 && this.YIntercept > this.vertex.y && this.YIntercept < points[points.length -1].y) {
-      points.push({x: 0, y:this.YIntercept})
-    } else if (a < 0 && this.YIntercept < this.vertex.y && this.YIntercept > points[points.length -1].y) {
-      points.push({x: 0, y:this.YIntercept})
+    if (
+      a > 0 && 
+      this.YIntercept > this.vertex.y &&
+      this.YIntercept < points[points.length - 1].y &&
+      !points.filter(e => e.x === 0).length > 0
+    ) {
+      points.push({ x: 0, y: this.YIntercept })
+    } else if (
+      a < 0 && 
+      this.YIntercept < this.vertex.y &&
+      this.YIntercept > points[points.length - 1].y &&
+      !points.filter(e => e.x === 0).length > 0
+    ) {
+      points.push({ x: 0, y: this.YIntercept })
     }
 
     points.sort((a, b) => a.x - b.x)
@@ -132,7 +147,7 @@ export default class VertexFunction {
     const h = !this.isInputValid(parseFloat(this.h)) ? 0 : parseFloat(this.h)
     const k = !this.isInputValid(parseFloat(this.k)) ? 0 : parseFloat(this.k)
     const strings = this.strings.steps.findYIntercept
-    
+
 
     const firstTerm = a === 1 ? "" : a
     const thirdTerm = k === 0 ? "" : `${k > 0 ? "+" : ""}${k}`
@@ -140,13 +155,13 @@ export default class VertexFunction {
     const step1 = {
       title: strings.replaceX,
       value:
-      `
+        `
       y = 
       ${firstTerm}
       ${h === 0 ? "0²" : `(0${h * -1 > 0 ? "+" : ""}${h * -1})²`}
       ${thirdTerm}
       `
-    } 
+    }
 
     const result = a * Math.pow(0 - h, 2) + k
     const step2 = {
@@ -156,7 +171,7 @@ export default class VertexFunction {
       `
     }
 
-    return {steps:[step1, step2], result: result}
+    return { steps: [step1, step2], result: result }
   }
 
   findRootsSteps() {
@@ -193,7 +208,7 @@ export default class VertexFunction {
     const firstTerm = a === 1 ? "" : a
     const secondTerm = h === 0 ? "x²" : `(x${h * -1 > 0 ? "+" : ""}${h * -1})²`
     const strings = this.strings.steps.findRoots
-    
+
     /* STEP 1 */
     /*  Convert number into opposite number 
      since we're moving it to the other side of the equation */
@@ -308,7 +323,7 @@ export default class VertexFunction {
       subSteps: multiplyBinomial.steps
     }
     const step2 = {
-      title:  strings.replaceResult,
+      title: strings.replaceResult,
       value: `
       y = ${a}
       (${multiplyBinomial.result})
