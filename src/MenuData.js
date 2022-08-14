@@ -1,19 +1,11 @@
 const menuData = [
   {
     title: "Vertex form calculator",
-    pathName: "/"
-  },
-  {
-    title: "Standard form calculator",
-    pathName: "/"
-  },
-  {
-    title:"Simple interest calculator",
-    pathName: "/"
+    pathName: "/vertex-form-calculator"
   },
   {
     title: "Compound interest calculator",
-    pathName: "/"
+    pathName: "/compound-interest-calculator"
   },
   
 ]
