@@ -54,8 +54,6 @@ export default class Investment {
   }
 
   getEffectiveRate() {
-    const rate = parseFloat(this.rate / 100)
-    const caps = parseFloat(this.capitalizations)
     //return (Math.pow(1+rate/caps, caps) - 1) * 100
     return this.gainedInterest * 100 / this.amount
   }
